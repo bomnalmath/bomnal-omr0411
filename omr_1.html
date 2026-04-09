@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>봄날수학 중1 기출문제 OMR</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f5f1ed; --card:#fff; --hbg:#d4956a;
+    --ac:#d4956a; --text:#1a1a1a; --ts:#888; --tm:#aaa;
+    --bd:#ddd; --bl:#e8e4df; --bbg:#ede9e4; --bbd:#d0cbc5;
+    --gn:#2e7d5e; --r:12px; --f:'Noto Sans KR',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:var(--f);background:var(--bg);color:var(--text);}
+
+  /* Header */
+  .hd{background:var(--hbg);color:#fff;text-align:center;padding:12px 48px 10px;position:relative;}
+  .back{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.9);font-size:12px;font-weight:600;text-decoration:none;padding:5px 10px;border-radius:8px;background:rgba(0,0,0,0.18);}
+  .hd-top{font-size:10px;color:rgba(255,255,255,0.72);letter-spacing:0.7px;margin-bottom:2px;}
+  .hd-title{font-size:15px;font-weight:900;letter-spacing:-0.3px;}
+
+  /* Name */
+  .nm{background:var(--card);border-bottom:1px solid var(--bl);display:flex;align-items:center;padding:0 16px;height:48px;gap:8px;}
+  .nm input{flex:1;border:none;outline:none;font-family:var(--f);font-size:14px;font-weight:500;color:var(--text);background:transparent;}
+  .nm input::placeholder{color:#bbb;font-weight:400;}
+  .nm-hint{font-size:10px;color:var(--tm);white-space:nowrap;}
+
+  /* School bar */
+  .sc{background:var(--card);padding:10px 14px 12px;border-bottom:1px solid var(--bl);}
+  .sc-bar{display:flex;gap:7px;flex-wrap:wrap;}
+  .sc-btn{padding:7px 16px;border-radius:100px;border:1.5px solid var(--bd);background:transparent;font-family:var(--f);font-size:13px;font-weight:600;color:var(--ts);cursor:pointer;transition:all .15s;}
+  .sc-btn.active{background:var(--ac);border-color:var(--ac);color:#fff;}
+  .sc-btn:hover:not(.active){border-color:var(--ac);color:var(--ac);}
+
+  /* Progress */
+  .pg{background:var(--card);padding:7px 16px;border-bottom:1px solid var(--bl);text-align:center;font-size:12px;color:var(--ts);font-weight:500;}
+
+  /* OMR */
+  .oa{padding:12px;padding-bottom:90px;}
+  .oc{background:var(--card);border-radius:var(--r);border:1px solid var(--bl);overflow:hidden;}
+  .oh{padding:13px 16px 11px;border-bottom:1px solid var(--bl);}
+  .oh-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:2px;}
+  .oh-sub{font-size:10px;color:var(--tm);}
+  .oh-hint{font-size:10px;color:var(--tm);float:right;margin-top:-24px;text-align:right;line-height:1.6;}
+
+  /* 미등록 배너 */
+  .nb{background:#fff8e1;border:1.5px solid #ffe082;border-radius:8px;padding:9px 12px;margin:10px 12px 0;font-size:11px;font-weight:600;color:#8c6d10;}
+  .nb.hidden{display:none;}
+
+  /* Section label */
+  .sl{padding:8px 12px 5px;font-size:10px;font-weight:800;color:var(--tm);letter-spacing:1px;border-bottom:1px solid var(--bl);background:#faf9f7;}
+  .sl.hidden{display:none;}
+
+  /* Q Grid - 3열 */
+  .qg{display:grid;grid-template-columns:1fr 1fr 1fr;}
+  .qc{border-right:1px dashed var(--bl);padding:6px 0;}
+  .qc:last-child{border-right:none;}
+  .qr{display:flex;align-items:center;padding:5px 4px 5px 8px;gap:3px;border-bottom:1px dashed var(--bl);}
+  .qr:last-child{border-bottom:none;}
+  .qr.wrong{background:#fff5f4;}
+  .qn{font-size:11px;font-weight:700;color:var(--ts);min-width:16px;text-align:right;flex-shrink:0;}
+  .bs{display:flex;gap:2px;}
+  .b{width:26px;height:26px;border-radius:50%;background:var(--bbg);border:1.5px solid var(--bbd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;cursor:pointer;transition:all .13s;user-select:none;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
+  .b:hover:not(.lk){background:#f5e8e7;border-color:var(--ac);color:var(--ac);}
+  .b.sel{background:#fff;border-color:var(--ac);color:var(--ac);font-weight:900;}
+  .b.ok{background:var(--gn);border-color:var(--gn);color:#fff;}
+  .b.ng{background:var(--ac);border-color:var(--ac);color:#fff;}
+  .b.lk{cursor:default;}
+
+  /* 주관식 */
+  .sas{padding:8px 12px 12px;}
+  .sal{display:flex;flex-direction:column;gap:7px;}
+  .sar{display:flex;align-items:center;gap:7px;}
+  .san{font-size:11px;font-weight:700;color:var(--ts);min-width:28px;text-align:right;white-space:nowrap;}
+  .saw{flex:1;position:relative;}
+  .sai{width:100%;border:1.5px solid var(--bd);border-radius:8px;padding:8px 10px;font-family:var(--f);font-size:13px;font-weight:500;color:var(--text);outline:none;background:#fafafa;transition:border-color .15s;}
+  .sai:focus{border-color:var(--ac);background:#fff;}
+  .sai.lk{background:#f5f5f5;pointer-events:none;color:var(--ts);}
+  .sai.sc{border-color:var(--gn);background:#f0faf5;}
+  .sai.sw{border-color:var(--ac);background:#fff5f4;}
+  .sab{font-size:10px;font-weight:700;padding:3px 7px;border-radius:20px;white-space:nowrap;min-width:40px;text-align:center;}
+  .sab.ok{background:#e8f5ee;color:var(--gn);}
+  .sab.ng{background:#fff0ef;color:var(--ac);}
+  .sab.un{background:#f5f5f5;color:var(--tm);}
+  .sah{font-size:10px;color:var(--ac);margin-top:3px;margin-left:35px;font-weight:600;}
+
+  /* Bottom */
+  .bb{position:fixed;bottom:0;left:0;right:0;display:flex;height:60px;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,0.09);}
+  .rb{flex:1;background:#f0ebe5;border:none;border-right:1px solid var(--bd);font-family:var(--f);font-size:13px;font-weight:600;color:var(--ts);cursor:pointer;}
+  .rb:hover{background:#e5dfda;}
+  .gb{flex:2;background:#1e1e1e;border:none;font-family:var(--f);font-size:15px;font-weight:800;color:#fff;cursor:pointer;letter-spacing:0.3px;}
+  .gb:hover{background:#333;}
+  .gb:disabled{background:#999;cursor:default;}
+
+  /* Result */
+  .ro{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:flex-end;justify-content:center;}
+  .ro.show{display:flex;animation:fi .2s ease;}
+  @keyframes fi{from{opacity:0;}to{opacity:1;}}
+  .rs{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:640px;padding:24px 20px 32px;animation:su .3s ease;max-height:82vh;overflow-y:auto;}
+  @keyframes su{from{transform:translateY(50px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .rh{width:36px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto 18px;}
+  .rm{font-size:12px;color:var(--tm);margin-bottom:5px;}
+  .rsr{display:flex;align-items:baseline;gap:5px;margin-bottom:3px;}
+  .rsc{font-size:48px;font-weight:900;color:var(--text);line-height:1;}
+  .rsu{font-size:18px;font-weight:700;color:var(--ts);}
+  .rct{font-size:13px;color:var(--tm);margin-bottom:14px;}
+  .rdv{height:1px;background:var(--bl);margin-bottom:12px;}
+  .rsl{font-size:11px;font-weight:700;color:var(--tm);margin-bottom:7px;letter-spacing:0.3px;}
+  .wcs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;min-height:24px;}
+  .wc{background:#fff0ef;border:1.5px solid #f5b8b4;color:var(--ac);border-radius:100px;padding:3px 10px;font-size:12px;font-weight:700;}
+  .ac{color:var(--gn);font-weight:800;font-size:14px;padding:3px 0;margin-bottom:14px;}
+  .srl{margin-bottom:14px;display:flex;flex-direction:column;gap:5px;}
+  .srr{display:flex;align-items:center;gap:7px;font-size:12px;}
+  .srn{font-weight:700;color:var(--ts);min-width:28px;}
+  .srs{flex:1;color:var(--text);font-weight:500;}
+  .sra{font-size:10px;color:var(--tm);}
+  .srb{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;}
+  .srb.ok{background:#e8f5ee;color:var(--gn);}
+  .srb.ng{background:#fff0ef;color:var(--ac);}
+  .srb.sk{background:#f5f5f5;color:var(--tm);}
+  .sn{background:#1e1e1e;color:#fff;border-radius:10px;padding:13px 14px;font-size:12px;font-weight:600;text-align:center;margin-bottom:10px;}
+  .cb{width:100%;padding:12px;background:var(--bg);border:1.5px solid var(--bd);border-radius:10px;font-family:var(--f);font-size:13px;font-weight:600;color:var(--ts);cursor:pointer;}
+
+  /* 모바일 최적화 */
+  @media(max-width:380px){
+    .b{width:23px;height:23px;font-size:10px;}
+    .bs{gap:1px;}
+    .qr{padding:4px 3px 4px 6px;gap:2px;}
+    .qn{min-width:14px;font-size:10px;}
+    .nm-hint{display:none;}
+    .oh-hint{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <a class="back" href="index.html">← 홈</a>
+  <div class="hd-top">봄날수학 · 2025 중간고사 대비</div>
+  <div class="hd-title">중1 기출문제 OMR</div>
+</div>
+
+<div class="nm">
+  <span style="font-size:15px;">✏️</span>
+  <input id="sn" type="text" placeholder="이름을 입력하세요" maxlength="10">
+  <span class="nm-hint">결과 캡처 시 이름이 표시됩니다</span>
+</div>
+
+<div class="sc"><div class="sc-bar" id="sb"></div></div>
+<div class="pg" id="pg">학교를 선택하세요</div>
+
+<div class="oa">
+  <div class="oc">
+    <div id="oh" style="display:none" class="oh">
+      <div class="oh-hint">번호 클릭해서 선택</div>
+      <div class="oh-title" id="ot"></div>
+      <div class="oh-sub" id="os"></div>
+    </div>
+    <div class="nb hidden" id="nb">⚠️ <span id="nt">정답을 입력하세요</span></div>
+    <div class="sl hidden" id="ml">객 관 식</div>
+    <div class="qg" id="qg">
+      <div style="grid-column:1/-1;padding:40px 16px;text-align:center;color:#bbb;font-size:13px;">학교를 선택하면 답안지가 표시됩니다</div>
+    </div>
+    <div id="ss" style="display:none">
+      <div class="sl">주 관 식</div>
+      <div class="sas"><div class="sal" id="sl"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="bb">
+  <button class="rb" onclick="resetOMR()">↺ 초기화</button>
+  <button class="gb" id="gb" onclick="gradeOMR()" disabled>채점하기</button>
+</div>
+
+<div class="ro" id="ro" onclick="overlayClick(event)">
+  <div class="rs">
+    <div class="rh"></div>
+    <div class="rm" id="rm"></div>
+    <div class="rsr"><div class="rsc" id="rsc"></div><div class="rsu">점</div></div>
+    <div class="rct" id="rct"></div>
+    <div class="rdv"></div>
+    <div class="rsl">틀린 번호 (객관식)</div>
+    <div class="wcs" id="wcs"></div>
+    <div id="srs" style="display:none">
+      <div class="rsl">주관식 채점 결과</div>
+      <div class="srl" id="srl"></div>
+    </div>
+    <div class="sn">📢 선생님께 결과를 제출하세요!</div>
+    <button class="cb" onclick="closeResult()">닫기</button>
+  </div>
+</div>
+
+<script>
+const SCHOOLS=[
+    { name: '금호중', mc: { count:25, answers:[5,2,4,1,5,3,3,5,2,5,1,3,1,4,3,4,3,1,4,2,1,4,2,5,5] }, sa: null },
+    { name: '글벗중', mc: { count:26, answers:[3,5,4,2,1,4,4,5,2,4,1,5,3,5,3,2,1,5,4,3,1,4,3,3,1,2] }, sa: null },
+    { name: '고운중', mc: { count:25, answers:[1,1,5,4,5,1,3,3,2,5,2,4,4,5,3,1,1,2,5,2,3,4,2,3,4] }, sa: null },
+  ];
+let cur=null,mcA=[],saA=[],graded=false;
+
+function renderSchools(){
+  const bar=document.getElementById('sb');bar.innerHTML='';
+  SCHOOLS.forEach(s=>{
+    const btn=document.createElement('button');btn.className='sc-btn';
+    btn.textContent=s.name;btn.onclick=()=>pickSchool(s,btn);bar.appendChild(btn);
+  });
+}
+
+function pickSchool(s,btn){
+  if(graded)return;
+  cur=s;mcA=new Array(s.mc.count).fill(0);
+  saA=s.sa?s.sa.items.map(()=>''):[];
+  document.querySelectorAll('.sc-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderOMR();updatePG();
+}
+
+function renderOMR(){
+  const s=cur;
+  document.getElementById('oh').style.display='block';
+  const si=s.sa?s.sa.items:[];
+  const tot=s.mc.count+si.length;
+  document.getElementById('ot').textContent=s.name+' 기출문제';
+  document.getElementById('os').textContent='2025학년도 · 1학기중간 · 총 '+tot+'문항'+(si.length?' (객관식 '+s.mc.count+' + 주관식 '+si.length+')':'');
+  const nb=document.getElementById('nb');
+  const noSA=si.filter(it=>it.answer==='');
+  if(s.mc.answers.length===0){nb.classList.remove('hidden');document.getElementById('nt').textContent='객관식 정답을 입력하세요 (선생님 확인 필요)';}
+  else if(noSA.length>0){nb.classList.remove('hidden');document.getElementById('nt').textContent='주관식 '+noSA.map(it=>it.num+'번').join(', ')+' 정답을 입력하세요';}
+  else{nb.classList.add('hidden');}
+  if(s.mc.answers.length===0){
+    document.getElementById('ml').classList.add('hidden');
+    document.getElementById('qg').innerHTML='<div style="grid-column:1/-1;padding:28px 16px;text-align:center;color:#bbb;font-size:13px;">객관식 정답 미등록</div>';
+    document.getElementById('gb').disabled=true;
+  }else{
+    document.getElementById('ml').classList.remove('hidden');renderMC(s.mc.count);
+    document.getElementById('gb').disabled=false;
+  }
+  const ss=document.getElementById('ss');
+  if(si.length>0){ss.style.display='block';renderSA(si);}else{ss.style.display='none';}
+}
+
+function renderMC(n){
+  const c1=Math.ceil(n/3),c2=Math.ceil(n*2/3);
+  const g=document.getElementById('qg');g.innerHTML='';
+  [[0,c1],[c1,c2],[c2,n]].forEach(([a,b])=>{
+    const col=document.createElement('div');col.className='qc';
+    for(let q=a;q<b;q++)col.appendChild(makeRow(q));
+    g.appendChild(col);
+  });
+}
+
+function makeRow(q){
+  const r=document.createElement('div');r.className='qr';r.id='r'+q;
+  const n=document.createElement('div');n.className='qn';n.textContent=q+1;
+  const bs=document.createElement('div');bs.className='bs';
+  for(let v=1;v<=5;v++){
+    const b=document.createElement('div');b.className='b';b.id='b'+q+'_'+v;
+    b.textContent=v;b.onclick=()=>pick(q,v);bs.appendChild(b);
+  }
+  r.appendChild(n);r.appendChild(bs);return r;
+}
+
+function renderSA(items){
+  const list=document.getElementById('sl');list.innerHTML='';
+  items.forEach((it,i)=>{
+    const r=document.createElement('div');r.className='sar';
+    const n=document.createElement('div');n.className='san';n.textContent=it.num+'번';
+    const w=document.createElement('div');w.className='saw';
+    const inp=document.createElement('input');inp.type='text';inp.className='sai';
+    inp.id='si'+i;inp.placeholder='답을 입력하세요';inp.value=saA[i]||'';
+    inp.oninput=e=>{saA[i]=e.target.value;updatePG();};
+    w.appendChild(inp);
+    const badge=document.createElement('div');badge.className='sab';badge.id='sb'+i;
+    r.appendChild(n);r.appendChild(w);r.appendChild(badge);list.appendChild(r);
+  });
+}
+
+function pick(q,v){
+  if(graded)return;
+  mcA[q]=(mcA[q]===v)?0:v;
+  for(let i=1;i<=5;i++){const b=document.getElementById('b'+q+'_'+i);if(b)b.className='b'+(mcA[q]===i?' sel':'');}
+  updatePG();
+}
+
+function updatePG(){
+  if(!cur)return;
+  const ma=mcA.filter(v=>v!==0).length,sa=saA.filter(v=>v.trim()!=='').length;
+  const tot=cur.mc.count+(cur.sa?cur.sa.items.length:0);
+  if(cur.mc.answers.length===0){document.getElementById('pg').textContent='정답 미등록';return;}
+  document.getElementById('pg').textContent=(ma+sa)+' / '+tot+' 답안 입력됨';
+}
+
+function gradeOMR(){
+  const name=document.getElementById('sn').value.trim();
+  if(!name){alert('이름을 입력해주세요!');document.getElementById('sn').focus();return;}
+  if(!cur||cur.mc.answers.length===0)return;
+  const ans=cur.mc.answers,tot=cur.mc.count;
+  let ok=0;const wr=[];
+  for(let q=0;q<tot;q++){
+    const ua=mcA[q],ra=ans[q],go=(ua===ra);
+    if(go)ok++;else wr.push(q+1);
+    for(let v=1;v<=5;v++){const b=document.getElementById('b'+q+'_'+v);if(!b)continue;b.className='b lk';if(v===ua)b.classList.add(go?'ok':'ng');}
+    const row=document.getElementById('r'+q);if(row&&!go)row.classList.add('wrong');
+  }
+  const si=cur.sa?cur.sa.items:[];let saOk=0;const saRes=[];
+  si.forEach((it,i)=>{
+    const inp=document.getElementById('si'+i);const badge=document.getElementById('sb'+i);
+    if(inp)inp.classList.add('lk');
+    const stu=(saA[i]||'').trim(),cor=it.answer.trim();let st;
+    if(cor===''){st='un';if(badge){badge.textContent='미등록';badge.className='sab un';}}
+    else if(stu===cor){st='ok';saOk++;if(badge){badge.textContent='정답 ✓';badge.className='sab ok';}if(inp)inp.classList.add('sc');}
+    else{st='ng';if(badge){badge.textContent='오답 ✗';badge.className='sab ng';}if(inp)inp.classList.add('sw');const h=document.createElement('div');h.className='sah';h.textContent='정답: '+cor;inp.parentNode.appendChild(h);}
+    saRes.push({num:it.num,stu,cor,st});
+  });
+  graded=true;document.getElementById('gb').disabled=true;
+  showResult(name,Math.round((ok/tot)*100),ok,tot,wr,saRes);
+}
+
+function showResult(name,score,mc,tot,wr,saRes){
+  document.getElementById('rm').textContent=name+' 학생 · '+cur.name;
+  document.getElementById('rsc').textContent=score;
+  document.getElementById('rct').textContent='객관식 '+tot+'문항 중 '+mc+'문항 정답'+(saRes.length?' · 주관식 '+saRes.length+'문항':'');
+  const wcs=document.getElementById('wcs');wcs.innerHTML='';
+  if(wr.length===0)wcs.innerHTML='<span class="ac">🎉 객관식 모두 정답!</span>';
+  else wr.forEach(n=>{const c=document.createElement('span');c.className='wc';c.textContent=n+'번';wcs.appendChild(c);});
+  const srs=document.getElementById('srs');
+  if(saRes.length>0){srs.style.display='block';const srl=document.getElementById('srl');srl.innerHTML='';saRes.forEach(r=>{const row=document.createElement('div');row.className='srr';row.innerHTML='<span class="srn">'+r.num+'번</span><span class="srs">'+(r.stu||'(미입력)')+'</span>'+(r.st==='ok'?'<span class="srb ok">정답 ✓</span>':r.st==='ng'?'<span class="srb ng">오답 ✗</span><span class="sra">정답: '+r.cor+'</span>':'<span class="srb sk">미등록</span>');srl.appendChild(row);});}else{srs.style.display='none';}
+  document.getElementById('ro').classList.add('show');
+}
+
+function closeResult(){document.getElementById('ro').classList.remove('show');}
+function overlayClick(e){if(e.target===document.getElementById('ro'))closeResult();}
+function resetOMR(){
+  if(!cur)return;if(!confirm('답안을 초기화할까요?'))return;
+  graded=false;mcA=new Array(cur.mc.count).fill(0);saA=cur.sa?cur.sa.items.map(()=>''):[];
+  renderOMR();updatePG();document.getElementById('gb').disabled=cur.mc.answers.length===0;
+  document.getElementById('ro').classList.remove('show');
+}
+
+renderSchools();
+</script>
+</body>
+</html>
