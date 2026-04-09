@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>봄날수학 중3 A그룹 기출문제 OMR</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f1ed;--card:#fff;--hbg:#22c55e;
+    --ac:#22c55e;--text:#1a1a1a;--ts:#777;--tm:#bbb;
+    --bd:#e0dbd6;--bl:#edeae6;--bbg:#ebebeb;--bbd:#d4cfc9;
+    --gn:#27ae60;--red:#e74c3c;--r:16px;--f:'Noto Sans KR',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--f);background:var(--bg);color:var(--text);}
+
+  /* ── 헤더 ── */
+  .hd{background:var(--hbg);color:#fff;text-align:center;padding:13px 52px 11px;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+  .back{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.9);font-size:12px;font-weight:600;text-decoration:none;padding:5px 10px;border-radius:8px;background:rgba(0,0,0,0.2);}
+  .hd-top{font-size:10px;color:rgba(255,255,255,0.7);letter-spacing:0.6px;margin-bottom:2px;}
+  .hd-title{font-size:16px;font-weight:900;}
+
+  /* ── 이름 ── */
+  .nm{background:var(--card);border-bottom:1px solid var(--bl);display:flex;align-items:center;padding:0 20px;height:54px;gap:10px;}
+  .nm input{flex:1;border:none;outline:none;font-family:var(--f);font-size:15px;font-weight:500;color:var(--text);background:transparent;}
+  .nm input::placeholder{color:#ccc;}
+  .nm-hint{font-size:10px;color:var(--tm);white-space:nowrap;}
+
+  /* ── 학교 버튼 ── */
+  .sc{background:var(--card);padding:12px 16px 14px;border-bottom:1px solid var(--bl);}
+  .sc-bar{display:flex;gap:8px;flex-wrap:wrap;}
+  .sc-btn{padding:8px 20px;border-radius:100px;border:1.5px solid var(--bd);background:transparent;font-family:var(--f);font-size:14px;font-weight:600;color:var(--ts);cursor:pointer;transition:all .15s;}
+  .sc-btn.active{background:var(--ac);border-color:var(--ac);color:#fff;}
+
+  /* ── 진행 ── */
+  .pg{background:var(--card);padding:8px 16px;border-bottom:1px solid var(--bl);text-align:center;font-size:12px;color:var(--ts);font-weight:500;}
+
+  /* ── OMR 영역 ── */
+  .oa{padding:14px;}
+
+  /* ── OMR 카드 ── */
+  .oc{background:var(--card);border-radius:var(--r);border:1px solid var(--bl);overflow:hidden;margin-bottom:14px;}
+  .oh{padding:16px 20px 12px;border-bottom:1px dashed var(--bl);}
+  .oh-title{font-size:18px;font-weight:900;color:var(--text);margin-bottom:3px;}
+  .oh-sub{font-size:11px;color:var(--tm);}
+  .oh-hint{font-size:10px;color:var(--tm);float:right;margin-top:-32px;line-height:1.8;text-align:right;}
+
+  /* ── 미등록 배너 ── */
+  .nb{background:#fff8e1;border:1.5px solid #ffe082;border-radius:10px;padding:10px 16px;margin:12px 14px 0;font-size:12px;font-weight:600;color:#8c6d10;}
+  .nb.hidden{display:none;}
+
+  /* ── Section 라벨 ── */
+  .sec-lbl{padding:9px 20px 6px;font-size:10px;font-weight:800;color:#ccc;letter-spacing:1.5px;background:#faf8f6;border-bottom:1px solid var(--bl);}
+  .sec-lbl.hidden{display:none;}
+
+  /* ── 1열 문항 레이아웃 ── */
+  .q-list{padding:6px 16px 6px;}
+  .q-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--bl);}
+  .q-row:last-child{border-bottom:none;}
+  .q-row.wrong .q-num{color:var(--red);}
+  .q-num{font-size:17px;font-weight:700;color:#555;width:26px;text-align:right;flex-shrink:0;margin-right:12px;}
+  .bubbles{display:flex;flex:1;justify-content:space-between;}
+  .bubble{
+    width:46px;height:46px;border-radius:50%;
+    background:var(--bbg);border:1.5px solid var(--bbd);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:700;color:#888;
+    cursor:pointer;transition:all .12s;
+    user-select:none;-webkit-tap-highlight-color:transparent;
+  }
+  .bubble:active:not(.lk){transform:scale(0.9);}
+  .bubble.sel{background:#fff;border-color:var(--ac);color:var(--ac);font-weight:900;border-width:2.5px;}
+  .bubble.ok{background:var(--gn);border-color:var(--gn);color:#fff;border-width:2px;}
+  .bubble.ng{background:var(--red);border-color:var(--red);color:#fff;border-width:2px;}
+  .bubble.lk{cursor:default;}
+  .q-mark{width:22px;flex-shrink:0;margin-left:10px;font-size:18px;text-align:center;}
+
+  /* ── 주관식 ── */
+  .sa-area{padding:10px 16px 14px;}
+  .sa-list{display:flex;flex-direction:column;gap:10px;}
+  .sa-row{display:flex;align-items:center;gap:10px;}
+  .sa-num{font-size:14px;font-weight:700;color:#555;min-width:36px;text-align:right;white-space:nowrap;flex-shrink:0;}
+  .sa-wrap{flex:1;position:relative;}
+  .sa-input{width:100%;border:1.5px solid var(--bd);border-radius:10px;padding:10px 14px;font-family:var(--f);font-size:15px;font-weight:500;color:var(--text);outline:none;background:#fafafa;transition:border-color .15s;}
+  .sa-input:focus{border-color:var(--ac);background:#fff;}
+  .sa-input.lk{background:#f5f5f5;pointer-events:none;color:var(--ts);}
+  .sa-input.s-ok{border-color:var(--gn);background:#f0faf5;}
+  .sa-input.s-ng{border-color:var(--red);background:#fff5f4;}
+  .sa-badge{font-size:11px;font-weight:700;padding:4px 8px;border-radius:20px;white-space:nowrap;text-align:center;flex-shrink:0;}
+  .sa-badge.ok{background:#e8f5ee;color:var(--gn);}
+  .sa-badge.ng{background:#fff0ef;color:var(--red);}
+  .sa-badge.un{background:#f5f5f5;color:var(--tm);}
+  .sa-hint{font-size:11px;color:var(--red);margin-top:4px;font-weight:600;}
+
+  /* ── 결과 카드 ── */
+  .result-card{
+    display:none;
+    background:#1e2530;
+    border-radius:var(--r);
+    padding:24px 20px 20px;
+    margin-bottom:14px;
+    text-align:center;
+    animation:fadeUp .4s ease;
+  }
+  .result-card.show{display:block;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+  .result-label{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:10px;font-weight:500;}
+  .result-score-row{display:flex;align-items:baseline;justify-content:center;gap:4px;margin-bottom:8px;}
+  .result-big{font-size:64px;font-weight:900;color:#fff;line-height:1;}
+  .result-denom{font-size:26px;font-weight:700;color:rgba(255,255,255,0.55);}
+  .result-stats{font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:18px;line-height:1.8;}
+  .result-capture{
+    background:var(--ac);color:#fff;
+    border-radius:12px;padding:13px 20px;
+    font-size:14px;font-weight:800;
+    letter-spacing:0.3px;
+    cursor:pointer;
+    border:none;font-family:var(--f);
+    width:100%;
+    transition:opacity .15s;
+  }
+  .result-capture:hover{opacity:0.88;}
+
+  /* ── 채점하기 버튼 ── */
+  .bottom-bar{position:fixed;bottom:0;left:0;right:0;height:60px;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,0.09);}
+  .grade-btn{width:100%;height:100%;background:#1e1e1e;border:none;font-family:var(--f);font-size:16px;font-weight:900;color:#fff;cursor:pointer;letter-spacing:0.5px;transition:background .15s;}
+  .grade-btn:hover{background:#333;}
+  .grade-btn:disabled{background:#aaa;cursor:default;}
+
+  /* 하단 여백 */
+  .pb{height:74px;}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <a class="back" href="index.html">← 홈</a>
+  <div class="hd-top">봄날수학 · 2025 중간고사 대비</div>
+  <div class="hd-title">중3 A그룹 기출문제 OMR</div>
+</div>
+
+<div class="nm">
+  <span style="font-size:18px;">✏️</span>
+  <input id="sn" type="text" placeholder="이름을 입력하세요" maxlength="10">
+  <span class="nm-hint">결과 캡처 시 이름이 함께 표시됩니다</span>
+</div>
+
+<div class="sc"><div class="sc-bar" id="sb"></div></div>
+<div class="pg" id="pg">학교를 선택하세요</div>
+
+<div class="oa">
+
+  <!-- OMR 카드 -->
+  <div class="oc" id="omrCard">
+    <div id="oh" style="display:none" class="oh">
+      <div class="oh-hint">번호 클릭해서 선택<br>답을 클릭해서 선택</div>
+      <div class="oh-title" id="ot"></div>
+      <div class="oh-sub" id="os"></div>
+    </div>
+    <div class="nb hidden" id="nb">⚠️ <span id="nt">정답을 입력하세요</span></div>
+    <div class="sec-lbl hidden" id="mcLbl">객 관 식</div>
+    <div class="q-list" id="ql">
+      <div style="padding:40px 0;text-align:center;color:#ccc;font-size:14px;">학교를 선택하면 답안지가 표시됩니다</div>
+    </div>
+    <div id="saSection" style="display:none">
+      <div class="sec-lbl">주 관 식</div>
+      <div class="sa-area"><div class="sa-list" id="saList"></div></div>
+    </div>
+  </div>
+
+  <!-- 결과 카드 (채점 후 표시) -->
+  <div class="result-card" id="resultCard">
+    <div class="result-label" id="resultLabel"></div>
+    <div class="result-score-row">
+      <div class="result-big" id="resultBig"></div>
+      <div class="result-denom" id="resultDenom"></div>
+    </div>
+    <div class="result-stats" id="resultStats"></div>
+    <button class="result-capture" onclick="scrollToTop()">📷 캡처해서 선생님께 제출!</button>
+  </div>
+
+  <div class="pb"></div>
+</div>
+
+<!-- 채점 버튼 -->
+<div class="bottom-bar">
+  <button class="grade-btn" id="gradeBtn" onclick="gradeOMR()" disabled>채점하기</button>
+</div>
+
+<script>
+const SCHOOLS = [
+    { name: '다정중',
+      mc: { count:17, answers:[1,3,5,3,5,4,2,4,3,1,1,1,3,4,1,5,1], points:null },
+      sa: { items: [
+        { num:18, answer:'30', points:null },
+        { num:19, answer:'6', points:null },
+        { num:20, answer:'4', points:null },
+        { num:21, answer:'48', points:null },
+      ]}
+    },
+    { name: '금호중', mc: { count:25, answers:[4,2,5,4,3,1,3,2,3,4,3,5,5,4,2,5,2,1,1,2,5,2,1,5,5], points:null }, sa: null },
+    { name: '글벗중',
+      mc: { count:22, answers:[1,2,3,5,2,1,2,1,3,3,5,5,4,4,4,4,5,4,5,2,3,1], points:null },
+      sa: { items: [
+        { num:23, answer:'6√5', points:null },
+        { num:24, answer:'3', points:null },
+        { num:25, answer:'13', points:null },
+      ]}
+    },
+  ];
+let cur=null, mcA=[], saA=[], graded=false;
+
+/* ── 학교 렌더 ── */
+function renderSchools(){
+  const bar=document.getElementById('sb'); bar.innerHTML='';
+  SCHOOLS.forEach(s=>{
+    const btn=document.createElement('button'); btn.className='sc-btn';
+    btn.textContent=s.name; btn.onclick=()=>pickSchool(s,btn); bar.appendChild(btn);
+  });
+}
+
+function pickSchool(s,btn){
+  if(graded)return;
+  cur=s; mcA=new Array(s.mc.count).fill(0);
+  saA=s.sa?s.sa.items.map(()=>''):[];
+  document.querySelectorAll('.sc-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderOMR(); updatePG();
+}
+
+/* ── OMR 렌더 ── */
+function renderOMR(){
+  const s=cur;
+  document.getElementById('oh').style.display='block';
+  const si=s.sa?s.sa.items:[];
+  const tot=s.mc.count+si.length;
+  document.getElementById('ot').textContent=s.name+' 기출문제';
+  document.getElementById('os').textContent='2025학년도 · 1학기중간 · 객관식 '+s.mc.count+'문항'+(si.length?' + 주관식 '+si.length+'문항':'');
+
+  const nb=document.getElementById('nb');
+  const noSA=si.filter(it=>it.answer==='');
+  if(s.mc.answers.length===0){nb.classList.remove('hidden');document.getElementById('nt').textContent='정답을 입력하세요 (선생님 확인 필요)';}
+  else if(noSA.length>0){nb.classList.remove('hidden');document.getElementById('nt').textContent='주관식 '+noSA.map(it=>it.num+'번').join(', ')+' 정답 미등록';}
+  else nb.classList.add('hidden');
+
+  if(s.mc.answers.length===0){
+    document.getElementById('mcLbl').classList.add('hidden');
+    document.getElementById('ql').innerHTML='<div style="padding:30px 0;text-align:center;color:#ccc;font-size:14px;">정답 미등록</div>';
+    document.getElementById('gradeBtn').disabled=true;
+  }else{
+    document.getElementById('mcLbl').classList.remove('hidden');
+    renderMC(s); document.getElementById('gradeBtn').disabled=false;
+  }
+
+  const ss=document.getElementById('saSection');
+  if(si.length>0){ss.style.display='block';renderSA(si);}else ss.style.display='none';
+
+  document.getElementById('resultCard').classList.remove('show');
+}
+
+function renderMC(s){
+  const list=document.getElementById('ql'); list.innerHTML='';
+  for(let q=0;q<s.mc.count;q++){
+    const row=document.createElement('div'); row.className='q-row'; row.id='r'+q;
+    const num=document.createElement('div'); num.className='q-num'; num.textContent=q+1;
+    const bubs=document.createElement('div'); bubs.className='bubbles';
+    for(let v=1;v<=5;v++){
+      const b=document.createElement('div'); b.className='bubble'; b.id='b'+q+'_'+v;
+      b.textContent=v; b.onclick=()=>pick(q,v); bubs.appendChild(b);
+    }
+    const mark=document.createElement('div'); mark.className='q-mark'; mark.id='m'+q;
+    row.appendChild(num); row.appendChild(bubs); row.appendChild(mark);
+    list.appendChild(row);
+  }
+}
+
+function renderSA(items){
+  const list=document.getElementById('saList'); list.innerHTML='';
+  items.forEach((it,i)=>{
+    const r=document.createElement('div'); r.className='sa-row';
+    const n=document.createElement('div'); n.className='sa-num'; n.textContent=it.num+'번';
+    const w=document.createElement('div'); w.className='sa-wrap';
+    const inp=document.createElement('input'); inp.type='text'; inp.className='sa-input';
+    inp.id='si'+i; inp.placeholder='답을 입력하세요'; inp.value=saA[i]||'';
+    inp.oninput=e=>{saA[i]=e.target.value; updatePG();};
+    w.appendChild(inp);
+    const badge=document.createElement('div'); badge.className='sa-badge'; badge.id='sbd'+i;
+    r.appendChild(n); r.appendChild(w); r.appendChild(badge); list.appendChild(r);
+  });
+}
+
+/* ── 버블 선택 ── */
+function pick(q,v){
+  if(graded)return;
+  mcA[q]=(mcA[q]===v)?0:v;
+  for(let i=1;i<=5;i++){const b=document.getElementById('b'+q+'_'+i);if(b)b.className='bubble'+(mcA[q]===i?' sel':'');}
+  updatePG();
+}
+
+function updatePG(){
+  if(!cur)return;
+  const ma=mcA.filter(v=>v!==0).length, sa=saA.filter(v=>v.trim()!=='').length;
+  const tot=cur.mc.count+(cur.sa?cur.sa.items.length:0);
+  if(cur.mc.answers.length===0){document.getElementById('pg').textContent='정답 미등록';return;}
+  document.getElementById('pg').textContent=(ma+sa)+' / '+tot+' 답안 입력됨';
+}
+
+/* ── 채점 ── */
+function gradeOMR(){
+  const name=document.getElementById('sn').value.trim();
+  if(!name){alert('이름을 입력해주세요!');document.getElementById('sn').focus();return;}
+  if(!cur||cur.mc.answers.length===0)return;
+
+  const ans=cur.mc.answers, pts=cur.mc.points, tot=cur.mc.count;
+  const hasPts=!!pts;
+  let mcOk=0, mcScore=0, maxScore=0;
+  if(hasPts) maxScore=pts.reduce((a,b)=>a+b,0);
+
+  for(let q=0;q<tot;q++){
+    const ua=mcA[q], ra=ans[q], ok=(ua===ra);
+    if(ok){mcOk++; if(hasPts)mcScore+=pts[q];}
+
+    // 버블 잠금 + 색상
+    for(let v=1;v<=5;v++){
+      const b=document.getElementById('b'+q+'_'+v); if(!b)continue;
+      b.className='bubble lk';
+      if(v===ua) b.classList.add(ok?'ok':'ng');
+    }
+    // X / ✓ 마크
+    const mark=document.getElementById('m'+q);
+    if(mark) mark.textContent=ok?'':'❌';
+    if(!ok){const row=document.getElementById('r'+q);if(row)row.classList.add('wrong');}
+  }
+
+  // 주관식
+  const si=cur.sa?cur.sa.items:[];
+  let saScore=0;
+  if(hasPts) si.forEach(it=>{if(it.points)maxScore+=it.points;});
+
+  si.forEach((it,i)=>{
+    const inp=document.getElementById('si'+i), badge=document.getElementById('sbd'+i);
+    if(inp)inp.classList.add('lk');
+    const stu=(saA[i]||'').trim(), cor=it.answer.trim();
+    let st;
+    if(!cor){st='un'; if(badge){badge.textContent='미등록';badge.className='sa-badge un';}}
+    else if(stu===cor){st='ok'; if(hasPts&&it.points)saScore+=it.points; if(badge){badge.textContent='✓';badge.className='sa-badge ok';} if(inp)inp.classList.add('s-ok');}
+    else{st='ng'; if(badge){badge.textContent='✗';badge.className='sa-badge ng';} if(inp)inp.classList.add('s-ng');
+      const h=document.createElement('div');h.className='sa-hint';h.textContent='정답: '+cor;inp.parentNode.appendChild(h);}
+  });
+
+  graded=true;
+  document.getElementById('gradeBtn').disabled=true;
+
+  // 결과 표시
+  const totalScore=hasPts?mcScore+saScore:null;
+  const totalMax=hasPts?maxScore:cur.mc.count+(si.length);
+
+  const rc=document.getElementById('resultCard');
+  document.getElementById('resultLabel').textContent=name+' · '+cur.name+' 결과';
+
+  if(hasPts){
+    const s=totalScore%1!==0?totalScore.toFixed(1):totalScore;
+    document.getElementById('resultBig').textContent=s;
+    document.getElementById('resultDenom').textContent=' / '+totalMax+'점';
+    const pct=Math.round(totalScore/totalMax*100);
+    const wrong=tot-mcOk;
+    document.getElementById('resultStats').textContent=
+      '맞힌 문제 '+mcOk+'개 | 틀린 문제 '+wrong+'개 | 정답률 '+pct+'%';
+  }else{
+    document.getElementById('resultBig').textContent=mcOk;
+    document.getElementById('resultDenom').textContent=' / '+tot;
+    const pct=Math.round(mcOk/tot*100);
+    const wrong=tot-mcOk;
+    document.getElementById('resultStats').textContent=
+      '맞힌 문제 '+mcOk+'개 | 틀린 문제 '+wrong+'개 | 정답률 '+pct+'%';
+  }
+
+  rc.classList.add('show');
+  setTimeout(()=>rc.scrollIntoView({behavior:'smooth',block:'start'}),200);
+}
+
+function scrollToTop(){
+  document.getElementById('omrCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+renderSchools();
+</script>
+</body>
+</html>
