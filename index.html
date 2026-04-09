@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>봄날수학 OMR 채점</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #edf1f9; min-height: 100vh; overflow-x: hidden; }
+
+  /* 꽃잎 */
+  .petals { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .petal {
+    position: absolute; border-radius: 80% 0 80% 0; opacity: 0.55;
+    animation: petalFall linear infinite;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(-40px) translateX(0) rotate(0deg);   opacity: 0.7; }
+    50%  { transform: translateY(45vh)  translateX(25px) rotate(200deg); opacity: 0.4; }
+    100% { transform: translateY(105vh) translateX(-15px) rotate(380deg); opacity: 0; }
+  }
+
+  /* 레이아웃 */
+  .wrap { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 52px 20px 64px; }
+
+  /* 뱃지 */
+  .brand { display: inline-flex; align-items: center; gap: 6px; background: #f97316; color: #fff; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 100px; margin-bottom: 22px; }
+
+  /* 타이틀 */
+  .title { font-size: 38px; font-weight: 900; line-height: 1.18; color: #1a2744; letter-spacing: -1.5px; margin-bottom: 12px; }
+  .title em { color: #c0392b; font-style: normal; }
+  .subtitle { font-size: 14px; color: #8899bb; line-height: 1.7; margin-bottom: 38px; }
+
+  .section-hint { font-size: 11px; font-weight: 700; color: #aab8cc; letter-spacing: 1.5px; margin-bottom: 14px; }
+
+  /* 카드 */
+  .cards { display: flex; flex-direction: column; gap: 13px; }
+
+  .card {
+    background: #fff; border-radius: 18px; padding: 22px 22px 22px 28px;
+    display: flex; align-items: center; gap: 14px;
+    text-decoration: none; cursor: pointer;
+    box-shadow: 0 2px 14px rgba(30,40,80,0.07);
+    border: 1.5px solid #e5eaf5;
+    transition: all 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+    background: var(--c); border-radius: 18px 0 0 18px;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(30,40,80,0.13); border-color: var(--c); }
+  .card:active { transform: translateY(0); }
+
+  .card-body { flex: 1; }
+  .card-grade { font-size: 11px; font-weight: 700; color: var(--c); margin-bottom: 5px; }
+  .card-name { font-size: 22px; font-weight: 900; color: #1a2744; letter-spacing: -0.5px; margin-bottom: 5px; }
+  .card-schools { font-size: 12px; color: #99aacc; line-height: 1.6; }
+  .card-arrow { font-size: 20px; color: var(--c); opacity: 0.6; flex-shrink: 0; }
+
+  .footer { text-align: center; margin-top: 40px; font-size: 11px; color: #c0c8da; }
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals"></div>
+
+<div class="wrap">
+  <div class="brand">🌸 봄날수학</div>
+  <div class="title">2025 중간고사<br><em>OMR 채점</em></div>
+  <div class="subtitle">학년을 선택하면<br>바로 채점을 시작할 수 있어요</div>
+
+  <div class="section-hint">▸ 학 년 선 택</div>
+
+  <div class="cards">
+    <a class="card" href="omr_1.html" style="--c:#f97316">
+      <div class="card-body">
+        <div class="card-grade">중학교 1학년</div>
+        <div class="card-name">중 1</div>
+        <div class="card-schools">금호중 · 글벗중 · 고운중<br>2025 · 1학기 중간고사</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="omr_2.html" style="--c:#3b82f6">
+      <div class="card-body">
+        <div class="card-grade">중학교 2학년</div>
+        <div class="card-name">중 2</div>
+        <div class="card-schools">금호중 · 글벗중 · 고운중<br>2025 · 1학기 중간고사</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="omr_3a.html" style="--c:#22c55e">
+      <div class="card-body">
+        <div class="card-grade">중학교 3학년 · 1그룹</div>
+        <div class="card-name">중3 1그룹</div>
+        <div class="card-schools">다정중 · 금호중 · 글벗중<br>2025 · 1학기 중간고사</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="card" href="omr_3b.html" style="--c:#a855f7">
+      <div class="card-body">
+        <div class="card-grade">중학교 3학년 · 2그룹</div>
+        <div class="card-name">중3 2그룹</div>
+        <div class="card-schools">종촌중 · 한솔중 · 해밀중<br>2024 · 1학기 중간고사</div>
+      </div>
+      <div class="card-arrow">→</div>
+    </a>
+  </div>
+
+  <div class="footer">봄날수학 · 세종시 · 2025</div>
+</div>
+
+<script>
+const colors = ['#ffb7c5','#ffc9d4','#ffd6df','#f9c2cc'];
+const container = document.getElementById('petals');
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  const size = 8 + Math.random() * 10;
+  p.style.cssText = `
+    left:${Math.random()*100}%;
+    width:${size}px; height:${size}px;
+    background:${colors[i%colors.length]};
+    animation-duration:${5+Math.random()*7}s;
+    animation-delay:${Math.random()*10}s;
+  `;
+  container.appendChild(p);
+}
+</script>
+</body>
+</html>
